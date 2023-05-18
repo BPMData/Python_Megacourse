@@ -1,6 +1,14 @@
-# Yesterday's code:
+from num2words import num2words
 
-todos = []
+todos = None
+# We are deleting the open list we created in the beginning and automatically creating one based on reading 06_Save.txt
+def check_todos_list():
+    global todos
+
+    if todos is None:
+        todos = []
+    else:
+        todos = todos
 
 while True:
     user_decision = input("Type either Add, Show, Edit, Complete or Exit:")
@@ -8,13 +16,22 @@ while True:
 
     match user_decision:
         case "add":
-            todo = input("Enter a To-Do Item:")
+            todo = input("Enter a To-Do Item:") + "\n"
+            savefile = open("06_Save.txt", "r")
+            todos = savefile.readlines()
+            savefile.close()
+
             todos.append(todo)
+
+            savefile = open("06_Save.txt", "w")
+            savefile.writelines(todos)
+            savefile.close()
+
         case "show" | "display":
             print()
             for index, item in enumerate(todos):
-                item = item.title()
-                row = f"{index+1}: {item}"
+                item = item.strip().title()
+                row = f"{index + 1}: {item}"
                 print(row)
             print(f"\nYour To-Do List is {num2words(len(todos))} items long.")
             print()
@@ -39,7 +56,3 @@ while True:
             print("You entered an unknown command.\n"
                   "Please type either Add, Show or Exit:")
 print("Good bye!")
-
-
-# Today's code:
-
