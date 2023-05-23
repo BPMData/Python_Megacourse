@@ -22,7 +22,7 @@ while True:
             new_todo = input("Please enter the To-Do Item you wish to replace this item.")
             todos[number] = new_todo
             # Here's the easier way to do it, as an "f-string literal" as autorecommended by PyCharm.
-            print(f"Your new To-Do Item is {todos[number]}.")
+            print(f"Your new To-Do Item is {todos[number]}.")`
         case "exit":
             break
         case _:
