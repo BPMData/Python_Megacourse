@@ -24,20 +24,22 @@ while True:
             savefile = open("07_Save.txt", "w")
             savefile.writelines(todos)
             savefile.close()
+            # Old way of doing it
+            #            for index, item in enumerate(todos):
+            #                item = item.rstrip()
+            #                row = f"{index + 1}: {item}"
+            #                print(row)
+            # New code starts here. Using a for-loop
         case "show" | "display":
-           # New code starts here. Using a for-loop
-
-           new_todos = []
-
-           for item in todos:
+            new_todos = []
+            for item in todos:
                new_item = item.strip("\n")
                new_todos.append(new_item)
             for index, item in enumerate(new_todos):
-              # We're commenting this out cuz I did this on my own.  item = item.rstrip() #rstrip removes thenewlines introduced by add to make our savefile human readable.
                 row = f"{index + 1}: {item}"
                 print(row)
-            print(f"\nYour To-Do List is {num2words(len(todos))} items long.")
-            print()
+                print(f"\nYour To-Do List is {num2words(len(todos))} items long.")
+                print()
         case "edit":
             number = int(input("Please enter the number of the To-Do Item you wish to edit."))
             number = number - 1

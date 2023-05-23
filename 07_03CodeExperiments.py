@@ -67,8 +67,10 @@ while True:
                   "Please type either Add, Show, Edit, Complete, Reset or Exit:")
 print("Good bye!")
 
-filenames = ["1.doc","1.report","1.presentation"]
+# filenames = ["1.doc","1.report","1.presentation"]
+#
+# filenames = [filename.replace(".","-") + ".txt" for filename in filenames]
+#
+# print(filenames)
 
-filenames = [filename.replace(".","-") + ".txt" for filename in filenames]
-
-print(filenames)
+# That glitch exists here, too.

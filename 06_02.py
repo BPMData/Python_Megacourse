@@ -66,7 +66,7 @@ while True:
             break
         case _:
             print("You entered an unknown command.\n"
-                  "Please type either Add, Show or Exit:")
+                  "Please type either Add, Show, Edit, Complete, Reset or Exit:")
 print("Good bye!")
 
 # Today's code - improved the RESET functionality, and now we're gonna see how to open a file if it's not in the working directory.
