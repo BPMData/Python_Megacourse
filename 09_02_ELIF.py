@@ -1,5 +1,4 @@
-# Start with our clean copy from 08_02_Clean_Copy.py
-
+# Here's the code from yesterday, my beautiful lovely program that will also crash if you don't type a number in edit.
 
 from num2words import num2words
 
@@ -7,8 +6,6 @@ while True:
     user_decision_base = input("Type either Add, Show, Edit, Complete, Reset or Exit:")
     user_decision = user_decision_base.strip().casefold()
     list_decision = user_decision.split()
-
-    # match user_decision:  Deleting this because we're using if/else now, not match/case
 
     with open("08_Save.txt", "r") as savefile:
         todos = savefile.readlines()
@@ -32,9 +29,6 @@ while True:
             print(f"Item {todo} added to your To-Do List.")
 
         if "show" in user_decision or "display" in user_decision:
-
-            # with open("08_Save.txt","r") as savefile:
-            # todos = savefile.readlines()  - this is definitely not needed, remember todos is actually defined outside of the match code
 
             print()
             for index, item in enumerate(todos):
@@ -96,16 +90,6 @@ while True:
 
         if "exit" in user_decision:
             break
-
-        # if not user_decision.startswith(
-        #         ("add", "show", "edit", "complete", "reset", "exit", "no")) or user_decision not in \
-        #         ("add", "show", "edit", "complete", "reset", "exit", "no"):
-
-# This method works, except in the edge case of users jumping straight to complete or reset after running the program
-        # if not user_decision.startswith(
-        #             ("add", "show", "edit", "complete", "reset", "exit", "no")):
-        #     print("You entered an unknown command.\n"
-        #           "Please type either Add, Show, Edit, Complete, Reset or Exit:")
 
         if list_decision[0] not in ("add", "show", "edit", "complete", "reset", "exit", "no"):
             print("You entered an unknown command.\n"
