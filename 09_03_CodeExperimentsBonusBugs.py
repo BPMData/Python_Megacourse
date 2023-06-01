@@ -1,7 +1,5 @@
-# Here's the code from yesterday, my beautiful lovely program that will also crash if you don't type a number in edit.
-# Just kidding I fixed that :)
-# But now we're gonna add some code so the program isn't constantly running through the entire WHILE loop looking for everything every time
-# In other words, IF ELSE
+# booleans:
+# https://www.udemy.com/course/the-python-mega-course/learn/lecture/34597776#overview
 
 from num2words import num2words
 
@@ -10,22 +8,22 @@ while True:
     user_decision = user_decision_base.strip().casefold()
     list_decision = user_decision.split()
 
-    with open("08_Save.txt", "r") as savefile:
+    with open("09_Save.txt", "r") as savefile:
         todos = savefile.readlines()
         todo = ()
 
-        if "add" in user_decision:
+        if "add" in user_decision or "new" in user_decision:
             if len(list_decision) > 1:
                 todo = user_decision_base[4:] +"\n"
             else:
                 todo = input("Enter a To-Do Item:") + "\n"
 
-            with open("08_Save.txt", "r") as savefile:
+            with open("09_Save.txt", "r") as savefile:
                 todos = savefile.readlines()
 
             todos.append(todo)
 
-            with open("08_Save.txt", "w") as savefile:
+            with open("09_Save.txt", "w") as savefile:
                 savefile.writelines(todos)
                 todo = todo.rstrip()
 
@@ -53,7 +51,7 @@ while True:
                     number = int(input("Please enter the number of the To-Do Item you wish to edit:"))
                     number = number - 1
 
-                    with open("08_Save.txt", "r") as savefile:
+                    with open("09_Save.txt", "r") as savefile:
                         todos = savefile.readlines()
 
                     # Two ways of printing a variable in a line of code. Here's way #1, old school way.
@@ -65,7 +63,7 @@ while True:
                     # Here's the easier way to do it, as an "f-string literal" as auto-recommended by PyCharm.
                     print(f"Your new To-Do Item is {todos[number].rstrip()}.")
 
-                    with open("08_Save.txt", "w") as savefile:
+                    with open("09_Save.txt", "w") as savefile:
                         savefile.writelines(todos)
                         break
 
@@ -80,7 +78,7 @@ while True:
                     removed = todos[number-1].rstrip()
                     todos.pop(number - 1)
 
-                    with open("08_Save.txt", "w") as savefile:
+                    with open("09_Save.txt", "w") as savefile:
                         savefile.writelines(todos)
 
                     message = f'To-Do Item "{removed}" was marked as complete, and thus removed from the list.'
@@ -96,7 +94,7 @@ while True:
             reset_choice = reset_choice.strip().casefold()
 
             if reset_choice == "yes":
-                with open("08_Save.txt", "w+") as savefile:  #wow, w+ is dope
+                with open("09_Save.txt", "w+") as savefile:  #wow, w+ is dope
                     savefile.write("")
                     todos = savefile.readlines()
 
@@ -109,13 +107,8 @@ while True:
         elif "exit" in user_decision:
             break
 
-        # elif list_decision[0] not in ("add", "show", "edit", "complete", "reset", "exit", "no"):
-        #     print("You entered an unknown command.\n"
-        #     "Please type either Add, Show, Edit, Complete, Reset or Exit:")
 
-
-        else: # does this really have the exact same functionality as my complicated ELIF check up above? D'oh.
-              # note that you cannot have conditionals in an else: statement. It's just else: and not else list_decision[0] not in...
+        else:
             print("You entered an unknown command.\n"
             "Please type either Add, Show, Edit, Complete, Reset or Exit:")
 
