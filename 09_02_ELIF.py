@@ -39,39 +39,54 @@ while True:
             print()
 
         if "edit" in user_decision:
-            for index, item in enumerate(todos):
-                item = item.rstrip()
-                row = f"{index + 1}: {item}"
-                print(row)
+            while True:
 
-            number = int(input("Please enter the number of the To-Do Item you wish to edit."))
-            number = number - 1
+                for index, item in enumerate(todos):
+                    item = item.rstrip()
+                    row = f"{index + 1}: {item}"
+                    print(row)
 
-            with open("08_Save.txt", "r") as savefile:
-                todos = savefile.readlines()
+                try:
+                    number = int(input("Please enter the number of the To-Do Item you wish to edit:"))
+                    number = number - 1
 
-            # Two ways of printing a variable in a line of code. Here's way #1, old school way.
-            print("You selected {}.".format(todos[number].rstrip()))
+                    with open("08_Save.txt", "r") as savefile:
+                        todos = savefile.readlines()
 
-            new_todo = input("Please enter the To-Do Item you wish to replace this item.")
-            todos[number] = new_todo + "\n"
+                    # Two ways of printing a variable in a line of code. Here's way #1, old school way.
+                    print("You selected {}.".format(todos[number].rstrip()))
 
-            # Here's the easier way to do it, as an "f-string literal" as auto-recommended by PyCharm.
-            print(f"Your new To-Do Item is {todos[number].rstrip()}.")
+                    new_todo = input("Please enter the To-Do Item you wish to replace this item:")
+                    todos[number] = new_todo + "\n"
 
-            with open("08_Save.txt", "w") as savefile:
-                savefile.writelines(todos)
+                    # Here's the easier way to do it, as an "f-string literal" as auto-recommended by PyCharm.
+                    print(f"Your new To-Do Item is {todos[number].rstrip()}.")
+
+                    with open("08_Save.txt", "w") as savefile:
+                        savefile.writelines(todos)
+                        break
+
+                except ValueError:
+                    print("A non-integer response was provided. Please type Edit again, then enter the number of the To-Do Item you wish to edit.")
 
         if "complete" in user_decision:
-            number = int(input("Please enter the number of the To-Do Item you wish to mark as completed."))
-            removed = todos[number-1].rstrip()
-            todos.pop(number - 1)
+            while True:
 
-            with open("08_Save.txt", "w") as savefile:
-                savefile.writelines(todos)
+                try:
+                    number = int(input("Please enter the number of the To-Do Item you wish to mark as completed."))
+                    removed = todos[number-1].rstrip()
+                    todos.pop(number - 1)
 
-            message = f'To-Do Item "{removed}" was marked as complete, and thus removed from the list.'
-            print(message)
+                    with open("08_Save.txt", "w") as savefile:
+                        savefile.writelines(todos)
+
+                    message = f'To-Do Item "{removed}" was marked as complete, and thus removed from the list.'
+                    print(message)
+                    break
+
+                except ValueError:
+                    print("A non-integer response was provided.")
+                    continue
 
         if "reset" in user_decision:
             reset_choice = input("Continuing with Reset will erase all items from your To-Do List,\nleaving it totally blank. Continue?\nType YES if certain.")
