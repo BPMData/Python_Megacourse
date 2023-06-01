@@ -1,4 +1,7 @@
 # Here's the code from yesterday, my beautiful lovely program that will also crash if you don't type a number in edit.
+# Just kidding I fixed that :)
+# But now we're gonna add some code so the program isn't constantly running through the entire WHILE loop looking for everything every time
+
 
 from num2words import num2words
 
