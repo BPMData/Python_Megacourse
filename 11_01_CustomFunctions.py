@@ -5,10 +5,11 @@ from num2words import num2words
 # Best practice is to define custom functions outside a loop.
 
 def get_save():
-    with open("11_Save.txt", "r") as savefile:
-        todos = savefile.readlines()
-    return todos
+    with open("11_Save.txt", "r") as savefile_local:
+        todos_local = savefile.readlines()
+    return todos_local
 
+# These two above are LOCAL variables because they're defined _within_ a function.
 
 while True:
     user_decision_base = input("Type either Add, Show, Edit, Complete, Reset or Exit:")
