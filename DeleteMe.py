@@ -1,6 +1,21 @@
-names = ["john smith", "jay santi", "eva kuki"]
+# def get_maximum():
+#     celsius = [14, 15.1, 12.3]
+#     maximum = max(celsius)
+#     print(maximum)
+#
+#
+# celsius = get_maximum()
+#
+# fahrenheit = celsius * 1.8 + 32
+# print(fahrenheit)
 
-for index, name in enumerate(names):
-    names[index] = name.title()
+def get_maximum():
+    celsius = [14, 15.1, 12.3]
+    maximum = max(celsius)
+    return(maximum)
 
-print(names)
+
+celsius = get_maximum()
+
+fahrenheit = celsius * 1.8 + 32
+print(fahrenheit)
