@@ -40,7 +40,7 @@ def foo(*list):
 
     return avg
 
-
+print(foo(10,20,30,40,50)
 print(foo(10, 20, 30, 40))
 
 
