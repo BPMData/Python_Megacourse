@@ -15,6 +15,10 @@ def get_save(filepath):
         todos_local = savefile_local.readlines()
     return todos_local
 
+def write_save(filepath, todos_arg):
+    with open(filepath,"w") as savefile_local:
+        savefile_local.writelines(todos_arg)
+
 # These two above are LOCAL variables because they're defined _within_ a function.
 
 while True:
@@ -22,7 +26,7 @@ while True:
     user_decision = user_decision_base.strip().casefold()
     list_decision = user_decision.split()
 
-    todos = get_save("12_Save.txt")
+    todos = get_save(filepath="12_Save.txt") # Including the parameter is optional. It'll assign arguments to parameters by sequential order, like R does.
     todo = ()
 
     # if "add" in user_decision or "new" in user_decision: old method
@@ -37,11 +41,12 @@ while True:
 
         todos.append(todo)
 
-        with open("12_Save.txt", "w") as savefile:
-            savefile.writelines(todos)
-            todo = todo.rstrip()
+        write_save("12_Save.txt",todos)
+        # with open("12_Save.txt", "w") as savefile:
+        #     savefile.writelines(todos)
+        #     todo = todo.rstrip()
 
-        print(f"Item {todo} added to your To-Do List.")
+        print(f"Item {todo.rstrip()} added to your To-Do List.")
 
     elif user_decision.startswith("show"):
 
@@ -68,8 +73,7 @@ while True:
                 todos[number] = new_todo + "\n"
                 print(f"Your new To-Do Item is {todos[number].rstrip()}.")
 
-                with open("12_Save.txt", "w") as savefile:
-                    savefile.writelines(todos)
+                write_save("12_Save.txt",todos)
 
             except ValueError:
                 print(
@@ -105,9 +109,8 @@ while True:
                     # Here's the easier way to do it, as an "f-string literal" as auto-recommended by PyCharm.
                     print(f"Your new To-Do Item is {todos[number].rstrip()}.")
 
-                    with open("12_Save.txt", "w") as savefile:
-                        savefile.writelines(todos)
-                        break
+                    write_save("12_Save.txt",todos)
+                    break
 
                 except ValueError:
                     print("A non-integer response was provided. Please provide an integer response.")
@@ -128,8 +131,7 @@ while True:
                     removed = todos[number].rstrip()
                     todos.pop(number)
 
-                with open("12_Save.txt", "w") as savefile:
-                    savefile.writelines(todos)
+                write_save("12_Save.txt",todos)
 
                 message = f'To-Do Item "{removed}" was marked as complete, and thus removed from the list.'
                 print(message)
@@ -145,8 +147,12 @@ while True:
         else:
             while True:
 
+                for index, item in enumerate(todos):
+                    item = item.rstrip()
+                    row = f"{index + 1}: {item}"
+                    print(row)
                 try:
-                    number = int(input("Please enter the number of the To-Do Item you wish to mark as completed."))
+                    number = int(input("See your current To-Do Items Above.\nPlease enter the number of the To-Do Item you wish to mark as completed."))
                     number = number-1
 
                     if number < 0 or user_decision[8:] == 0:
@@ -156,8 +162,7 @@ while True:
                         removed = todos[number].rstrip()
                         todos.pop(number)
 
-                    with open("12_Save.txt", "w") as savefile:
-                        savefile.writelines(todos)
+                    write_save("12_Save.txt", todos_arg=todos)
 
                     message = f'To-Do Item "{removed}" was marked as complete, and thus removed from the list.'
                     print(message)
