@@ -24,7 +24,6 @@ def write_save(todos_arg, filepath="12_Save.txt"): # Non-default parameters must
     with open(filepath,"w") as savefile_local:
         savefile_local.writelines(todos_arg)
 
-print(help(write_save))
 
 # You can also use triple quotes to create multi-line strings.
 
@@ -34,8 +33,6 @@ No, I think not.
 
 Bye!
 """
-
-
 print(multiline_string)
 # These two above are LOCAL variables because they're defined _within_ a function.
 
