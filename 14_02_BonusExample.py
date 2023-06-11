@@ -1,19 +1,10 @@
-# Re-using the bonus example code from day 12 as a baseline - with a focus on decoupling functions.
+# Re-using the bonus example code from day 13 as a baseline - with a focus on decoupling functions.
+from Modules.Bonus_14_Day import parse, convert
+
 feet_inches = input("Enter feet and inches:")
 
-def parse(feet_inches):
-    parts = feet_inches.split(" ")
-    feet = float(parts[0])
-    inches = float(parts[1])
-    # return feet, inches # we can do better than this by creating a {dictionary}.
-    return {"Feet": feet, "Inches": inches}
-
-def convert(Feet, Inches):
-    meters = Feet * 0.3048 + Inches * 0.0254
-    return meters
-
 parsed = parse(feet_inches)
-# result = convert(feet_inches)
+
 result = convert(parsed["Feet"], parsed["Inches"])
 
 print(f"\n{parsed['Feet']} feet and {parse(feet_inches)['Inches']} inches is equal to {result} meters.\n") # Here we see 3 different ways to call the output of a function in an f-string.
@@ -24,14 +15,52 @@ if result < 1:
 else:
     print("Kid can use the slide.")
 
+# Day 14 Quiz:  https://www.udemy.com/course/the-python-mega-course/learn/quiz/5579090#overview
 
-# Quiz:
+# Day 14 Coding Exercises
 
-year_of_birth = int(input("Please enter your year of birth as an integer, for example, 1983."))
+# Exercise 1
+def water_state(temperature):
+    if temperature <= 0:
+        print("Solid")
+    elif temperature > 0 and temperature < 100:
+        print("Liquid")
+    else:
+        print("Gas")
 
-def get_age(year_of_birth, current_year = 2023):
-    age = current_year - year_of_birth
-    return age
+water_state(100)
 
-print(get_age(1983))
+# Exercise 2
 
+FREEZING_POINT = 0
+BOILING_POINT = 100
+
+def water_state(temperature):
+    if temperature <= FREEZING_POINT:
+        return "Solid"
+    elif FREEZING_POINT < temperature < BOILING_POINT:
+        return "Liquid"
+    else:
+        return "Gas"
+
+# Exercise 3
+
+def marcopolo(temp):
+    if temp > 25:
+        print("Hot")
+    elif 15 <= temp <= 25:
+        print("Warm")
+    elif temp < 15:
+        print("Cold")
+
+marcopolo(10)
+marcopolo(15)
+marcopolo(25)
+marcopolo(26)
+
+
+def count(phrase):
+    return phrase.count('.')
+
+nr_of_periods = count("Trees are good. Grass is green.")
+print(nr_of_periods)
