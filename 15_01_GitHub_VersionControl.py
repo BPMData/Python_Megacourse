@@ -1,7 +1,19 @@
+import time
+
 from num2words import num2words
 
-from Modules.Functions_Day_14 import get_save, \
-    write_save
+from Modules.Functions_Day_14 import get_save, write_save, ord
+
+# Monday, June 12th, 2023, 10:24 am)
+daymonth = time.strftime("%A, %B ")
+date = ord(int(time.strftime("%d")))
+dayofyear = ord(int(time.strftime("%j")))
+time = time.strftime("%I:%M:%S %p")
+
+print(f"Hello! The current date is {daymonth}{date}.\nThe current time is {time}.\n"
+      f"It is the {dayofyear} day of the year.\n"
+      "Welcome to your To-Do List.")
+
 
 # with open("15_Save.txt","w") as savefile_local:
 #     pass
