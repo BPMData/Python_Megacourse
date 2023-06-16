@@ -63,4 +63,15 @@ while True:
         case sg.WINDOW_CLOSED:
             break
 
+print("Bye!")
 window.close()
+
+# Way to hypothetically generate buttons dynamically. Remove the ''' multiline quotes to run.
+
+'''button_labels = ["Close","Apply","Edit"]
+
+layout = []
+
+for bl in button_labels:
+    layout.append([sg.Button(bl)])'''
+
