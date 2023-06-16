@@ -6,6 +6,8 @@ import PySimpleGUI as sg
 from Modules.Functions_Day16_GUI import compressdone
 from Modules.ZipCreator_Bonus_Day17 import zipit
 
+sg.theme("DarkAmber")
+
 selectlabel = sg.Text("Selected file paths:")
 selectinput = sg.Input()
 selectbutton = sg.FilesBrowse("Select files to compress:", key="selected")
@@ -18,7 +20,7 @@ dests = [destlabel, destinput, destbutton]
 
 compress_button = sg.Button("Compress!")
 
-output = sg.Text(key="output",text_color="yellow")
+output = sg.Text(key="output",text_color="green")
 
 window = sg.Window("Bonus File Compressor",
                    layout=[[selects], [dests], [compress_button, output]])
