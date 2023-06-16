@@ -16,33 +16,35 @@ date = ord(int(time.strftime("%d")))
 dayofyear = ord(int(time.strftime("%j")))
 time = time.strftime("%I:%M:%S %p")
 
-help(sg.Text)
-
 datetimegreeting = sg.Text(f"Hello! The current date is {daymonth}{date}.\nThe current time is {time}.\n"
-      f"It is the {dayofyear} day of the year.", text_color="LemonChiffon4")
+      f"It is the {dayofyear} day of the year.", text_color="LemonChiffon4", justification="right")
 
-hello = sg.Text("Welcome to your To-Do List.\n")
+hello = sg.Text("Welcome to your To-Do List.\n Enter your input below.", justification="center")
 
-input_box = sg.InputText(tooltip="Enter To-Do Item:", key="TODO") # Defining these keys is important, do not forget them!
+input_box = sg.InputText("Enter input here:", enable_events=True, key="TODO") # Defining these keys is important, do not forget them!
                                                                     # The all caps is actually necessary, I did that to help me not
                                                                     # make the mistake of confusing TODO and todos
                                                                     # Bro why is that text in yellow?
                                                                     # Lol it's because PyCharm assumes its something I need to flag
                                                                     # as a note to self todo when I go to make a commit.
-add_button = sg.Button("Add To-Do")
+
+add_button = sg.Button("Add a To-Do",  key="add")
 
 list_box = sg.Listbox(values=get_save(), key="todos",
                       enable_events=True, size=[45, 10]) # This is where we define our second key, todos, not TODO
 
 edit_button = sg.Button("Edit a To-Do")
 
-complete_button = sg.Button("Complete", key="complete")
+complete_button = sg.Button("Complete a To-Do", key="complete")
+
+exit_button = sg.Button("Exit", key="exit")
 
 window = sg.Window("Bryan's Python To-Do App",
                    layout=[[datetimegreeting], [hello],
-                           [input_box, add_button],
-                           [list_box, edit_button, complete_button]],
-                   font =("Garamond", 18))
+                           [input_box], [add_button, edit_button, complete_button],
+                           [list_box],
+                           [exit_button]],
+                   font=("Garamond", 18))
 
 while True:
     event, values = window.read()
@@ -53,7 +55,7 @@ while True:
 
     match event:
 
-        case "Add To-Do":
+        case "add":
             todos = get_save()
             new_todo = values["TODO"] + "\n"
             todos.append(new_todo)
@@ -80,6 +82,14 @@ while True:
             todos.remove(todo_to_complete)
             write_save(todos)
             window["todos"].update(values=todos)
+            window["TODO"].update(value="")
+
+        case("exit"):
+            break
+
+        case "TODO":
+            if window["TODO"].get() == "Enter input here:":
+                window["TODO"].update(value="")
 
         case sg.WINDOW_CLOSED:
             break
