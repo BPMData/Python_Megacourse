@@ -1,8 +1,10 @@
 First
-Second
+JK_It's_Second
+Third
+Fourth
 never forget ;;;;;_;;;;;;
 MF_NO_MORE_NINTH_xXx_MLGTenth
 bye bye seventeenth
 Ninety-Eighth
-If you add something with the word todo in a text file Python will flag it in when you try to make a Git Commit
-Shut-a Up-A Your Face-A
+
+
