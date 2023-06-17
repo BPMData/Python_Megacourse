@@ -1,10 +1,4 @@
-# I overwrote some stuff from Main17 already and I also think I BROKE Main17. To GitHub we go.
-
-# https://www.udemy.com/course/the-python-mega-course/learn/lecture/34598582#learning-tools
-# See 16_01_Backend
-
 import time
-from time import strftime
 
 import PySimpleGUI as sg
 
@@ -26,46 +20,38 @@ clock = sg.Text("", key="clock")
 hello = sg.Text("Welcome to your To-Do List.\n Enter your input below.", justification="center")
 
 input_box = sg.InputText("Enter input here:", enable_events=True,
-                         key="TODO")  # Defining these keys is important, do not forget them!
-# The all caps is actually necessary, I did that to help me not
-# make the mistake of confusing TODO and todos
-# Bro why is that text in yellow?
-# Lol it's because PyCharm assumes its something I need to flag
-# as a note to self todo when I go to make a commit.
+                         key="TODO")
 
 buttontext = ("Garamond", 14)
 
-add_button = sg.Button("Add a To-Do", key="add", font=buttontext)
+add_button = sg.Button(image_source="add.png", key="add", mouseover_colors="dark orange", tooltip="Add a To-Do Item")
 
-list_box = sg.Listbox(values=get_save(), key="todos",
-                      enable_events=True, size=[45, 10])  # This is where we define our second key, todos, not TODO
+list_box = sg.Listbox(values=get_save(), enable_events=True, size=[45, 10],
+                      key = "todos")
 
-edit_button = sg.Button("Edit a To-Do", key="edit", font=buttontext)
+edit_button = sg.Button(image_source="edit.png",tooltip="Edit a To-Do Item",
+                            key="edit", mouseover_colors="dark orange")
 
-complete_button = sg.Button("Complete a To-Do", key="complete", font=buttontext)
+complete_button = sg.Button(image_source="completebw.png",tooltip="Complete a To-Do Item",
+                            key="complete", mouseover_colors="dark orange")
 
-exit_button = sg.Button("Exit", key="exit", font=buttontext)
+exit_button = sg.Button(image_source="exit.png",tooltip="Exit program",
+                            key="exit", mouseover_colors="dark orange")
 
-
+buttoncol = [[edit_button], [complete_button]]
 
 window = sg.Window("Bryan's Python To-Do App",
                    layout=[[datetimegreeting], [clock], [hello],
-                           [input_box], [add_button, edit_button, complete_button],
-                           [list_box],
+                           [input_box, add_button],
+                           [list_box, sg.Column(buttoncol)],
                            [exit_button]],
                    font=("Garamond", 18))
 
 while True:
-    event, values = window.read(timeout=200)
-
-    # window["clock"].update(value=f"The current time is: {strftime('%b %d, %Y %H:%M:%S')} -  His format, I don't like as much.
-
-    window["clock"].update(value=f"The current time is: {strftime('%b %d, %Y %I:%M:%S %p')}.", text_color="sienna3")
-
+    event, values = window.read()
     print(f"Event is {event}")  # Gets the label of the button that was pressed
     print(f"values is {values}")  # Gets the actual input to the field associated with that button.
     print(f"values['todos'] is {values['todos']}")
-    #   print(f"values['todos'][0] is {values['todos'][0]}") # This will crash your shit if you try clicking a button before clicking a Listbox item
 
     match event:
 
@@ -79,15 +65,32 @@ while True:
         case "edit":
             try:
                 todo_to_edit = values["todos"][0]
-                new_todo = values["TODO"]
 
-                todos = get_save()
-                index = todos.index(todo_to_edit)
-                todos[index] = new_todo + "\n"
-                write_save(todos)
-                window["todos"].update(values=todos)
-                # ^^^ Code to update the input box to display whatever you selected
-                # window[list_box] SEEMS like it should work but WILL NOT. PySimpleGUI is all about them KEYS.
+                # Create a pop-up window for editing
+                edit_layout = [
+                    [sg.Text("Please select what you'd like to change this To-Do to be.")],
+                    [sg.Input(key="edit_input")],
+                    [sg.Button("Edit", key="edit_confirm")]
+                ]
+                edit_window = sg.Window("Edit To-Do", layout=edit_layout)
+
+                while True:
+                    edit_event, edit_values = edit_window.read()
+
+                    if edit_event == "edit_confirm":
+                        new_todo = edit_values["edit_input"] + "\n"
+                        todos = get_save()
+                        index = todos.index(todo_to_edit)
+                        todos[index] = new_todo
+                        write_save(todos)
+                        window["todos"].update(values=todos)
+
+                        edit_window.close()
+                        break
+
+                    elif edit_event == sg.WINDOW_CLOSED:
+                        break
+
             except IndexError:
                 sg.popup("Please select an item to edit before clicking the Edit button.", no_titlebar=True,
                          font=("Garamond", 14))
@@ -120,11 +123,3 @@ while True:
 print("Bye!")
 window.close()
 
-# Way to hypothetically generate buttons dynamically. Remove the ''' multiline quotes to run.
-
-'''button_labels = ["Close","Apply","Edit"]
-
-layout = []
-
-for bl in button_labels:
-    layout.append([sg.Button(bl)])'''

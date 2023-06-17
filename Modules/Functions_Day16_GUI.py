@@ -132,6 +132,13 @@ def compressdone(location=None):
     message = "compressed.zip created. There is no need for further action."
     display_notification(title, message, img_success, 400, True, location=location)
 
+def fadepopup(header, text, location=None):
+    title = header
+    message = text
+    display_notification(title, message, img_success, 200, True, location=location)
+
+
+
 if __name__ == '__main__':
         todosuccessfuledit(location=(WIN_MARGIN, WIN_MARGIN))
 

@@ -35,23 +35,24 @@ input_box = sg.InputText("Enter input here:", enable_events=True,
 
 buttontext = ("Garamond", 14)
 
-add_button = sg.Button("Add a To-Do", key="add", font=buttontext)
+add_button = sg.Button("Add a To-Do", key="add", font=buttontext, mouseover_colors="dark orange", size=(16, 2))
 
 list_box = sg.Listbox(values=get_save(), key="todos",
                       enable_events=True, size=[45, 10])  # This is where we define our second key, todos, not TODO
 
-edit_button = sg.Button("Edit a To-Do", key="edit", font=buttontext)
+edit_button = sg.Button("Edit a To-Do", key="edit", font=buttontext, mouseover_colors="dark orange", size=(16, 2))
 
-complete_button = sg.Button("Complete a To-Do", key="complete", font=buttontext)
+complete_button = sg.Button("Complete a To-Do", key="complete", font=buttontext, mouseover_colors="dark orange", size=(16, 2))
 
-exit_button = sg.Button("Exit", key="exit", font=buttontext)
+exit_button = sg.Button("Exit", key="exit", font=buttontext, mouseover_colors="dark orange", size=15)
 
+buttoncol = [[add_button], [edit_button], [complete_button]]
 
 
 window = sg.Window("Bryan's Python To-Do App",
                    layout=[[datetimegreeting], [clock], [hello],
-                           [input_box], [add_button, edit_button, complete_button],
-                           [list_box],
+                           [input_box],
+                           [list_box, sg.Column(buttoncol)],
                            [exit_button]],
                    font=("Garamond", 18))
 

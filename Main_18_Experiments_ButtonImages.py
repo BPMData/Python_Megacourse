@@ -35,26 +35,32 @@ input_box = sg.InputText("Enter input here:", enable_events=True,
 
 buttontext = ("Garamond", 14)
 
-add_button = sg.Button("Add a To-Do", key="add", font=buttontext)
+add_button = sg.Button(image_source="add.png", key="add", mouseover_colors="dark orange", tooltip="Add a To-Do Item")
+# On WINDOWS, mouseover_colors is actually basically whenpressed_colors. Still nice to change up.
 
 list_box = sg.Listbox(values=get_save(), key="todos",
                       enable_events=True, size=[45, 10])  # This is where we define our second key, todos, not TODO
 
-edit_button = sg.Button("Edit a To-Do", key="edit", font=buttontext)
+edit_button = sg.Button(image_source="edit.png",tooltip="Edit a To-Do Item",
+                            key="edit", mouseover_colors="dark orange")
 
-complete_button = sg.Button("Complete a To-Do", key="complete", font=buttontext)
+complete_button = sg.Button(image_source="completebw.png",tooltip="Complete a To-Do Item",
+                            key="complete", mouseover_colors="dark orange")
 
-exit_button = sg.Button("Exit", key="exit", font=buttontext)
+exit_button = sg.Button(image_source="exit.png",tooltip="Exit program",
+                            key="exit", mouseover_colors="dark orange")
+
+buttoncol = [[add_button], [edit_button], [complete_button]]
 
 window = sg.Window("Bryan's Python To-Do App",
                    layout=[[datetimegreeting], [clock], [hello],
-                           [input_box], [add_button, edit_button, complete_button],
-                           [list_box],
+                           [input_box],
+                           [list_box, sg.Column(buttoncol)],
                            [exit_button]],
                    font=("Garamond", 18))
 
 while True:
-    event, values = window.read(timeout=200)
+    event, values = window.read(timeout=100)
 
     # window["clock"].update(value=f"The current time is: {strftime('%b %d, %Y %H:%M:%S')} -  His format, I don't like as much.
 

@@ -22,7 +22,7 @@ compress_button = sg.Button("Compress!")
 
 output = sg.Text(key="output",text_color="green")
 
-window = sg.Window("Bonus File Compressor",
+window = sg.Window("Bonus: File Compressor",
                    layout=[[selects], [dests], [compress_button, output]])
 # aha that did work!
 
