@@ -1,4 +1,4 @@
-FILEPATH = "Modules/Todos_Save.txt"
+FILEPATH = "todos.txt"
 def get_save(filepath=FILEPATH): # everything after the = sign is the default argument/parameter.
     """Loads your To-Do Items from the specified Save.txt file.
     Reads the text file and returns the list of to-do items."""

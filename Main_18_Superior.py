@@ -1,4 +1,5 @@
 import time
+from time import strftime
 
 import PySimpleGUI as sg
 
@@ -17,10 +18,10 @@ datetimegreeting = sg.Text(
 
 clock = sg.Text("", key="clock")
 
-hello = sg.Text("Welcome to your To-Do List.\n Enter your input below.", justification="center")
+hello = sg.Text("Welcome to your To-Do List.", justification="center")
 
-input_box = sg.InputText("Enter input here:", enable_events=True,
-                         key="TODO")
+input_text = sg.Text("New Item:")
+input_box = sg.InputText(tooltip="Enter input here:", key="TODO", size=32)
 
 buttontext = ("Garamond", 14)
 
@@ -29,29 +30,30 @@ add_button = sg.Button(image_source="add.png", key="add", mouseover_colors="dark
 list_box = sg.Listbox(values=get_save(), enable_events=True, size=[45, 10],
                       key = "todos")
 
-edit_button = sg.Button(image_source="edit.png",tooltip="Edit a To-Do Item",
+edit_button = sg.Button(image_source="edit_wide.png",tooltip="Edit a To-Do Item",
                             key="edit", mouseover_colors="dark orange")
 
-complete_button = sg.Button(image_source="completebw.png",tooltip="Complete a To-Do Item",
+complete_button = sg.Button(image_source="complete_wide.png",tooltip="Complete a To-Do Item",
                             key="complete", mouseover_colors="dark orange")
 
 exit_button = sg.Button(image_source="exit.png",tooltip="Exit program",
                             key="exit", mouseover_colors="dark orange")
 
-buttoncol = [[edit_button], [complete_button]]
+buttoncol = [[sg.Text("Existing Items:")], [edit_button], [complete_button]]
 
 window = sg.Window("Bryan's Python To-Do App",
                    layout=[[datetimegreeting], [clock], [hello],
-                           [input_box, add_button],
-                           [list_box, sg.Column(buttoncol)],
+                           [input_text, input_box, add_button],
+                           [list_box, sg.Column(buttoncol, element_justification="center")],
                            [exit_button]],
                    font=("Garamond", 18))
 
 while True:
-    event, values = window.read()
-    print(f"Event is {event}")  # Gets the label of the button that was pressed
-    print(f"values is {values}")  # Gets the actual input to the field associated with that button.
-    print(f"values['todos'] is {values['todos']}")
+    event, values = window.read(timeout=400)
+    # print(f"Event is {event}")  # Gets the label of the button that was pressed
+    # print(f"values is {values}")  # Gets the actual input to the field associated with that button.
+    # print(f"values['todos'] is {values['todos']}")
+    window["clock"].update(value=f"The current time is: {strftime('%b %d, %Y %I:%M:%S %p')}.", text_color="sienna3")
 
     match event:
 
@@ -110,9 +112,9 @@ while True:
                 sg.popup("Please select an item to complete before clicking the Complete button.", no_titlebar=True,
                          font=("Garamond", 14))
 
-        case "TODO":
-            if window["TODO"].get() == "Enter input here:":
-                window["TODO"].update(value="")
+        # case "TODO":
+        #     if window["TODO"].get() == "Enter input here:":
+        #         window["TODO"].update(value="")
 
         case ("exit"):
             break

@@ -1,3 +1,4 @@
+import os
 import time
 from time import strftime
 
@@ -5,6 +6,10 @@ import PySimpleGUI as sg
 
 from Modules.Functions_Day16_GUI import fadepopup
 from Modules.Functions_Day16_GUI import ord, get_save, write_save
+
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", "w") as file:
+        pass
 
 sg.theme("DarkBrown1")
 
