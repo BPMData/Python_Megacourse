@@ -14,10 +14,11 @@ datetimegreeting2 = f"It is the {dayofyear} day of the year."
 
 todos = get_save()
 
-def add_todo():
-    todo = st.session_state["new_todo"]
-    todos.append(todo + "\n")
-    write_save(todos)
+# def add_todo():
+#     new_todo = st.session_state["text"]
+#     todos.append(new_todo + "\n")
+#     write_save(todos)
+
 
 
 st.title("My To-Do App")
@@ -27,13 +28,31 @@ st.write(datetimegreeting2)
 st.write("Does this update in real-time?")
 st.write("Woah, it does.")
 
-st.checkbox("Checkbox 1")
-st.checkbox("Checkbox 2")
+for index, todo in enumerate(todos):
+    checkbox = st.checkbox(todo, key=todo)
+    if checkbox:
+        todos.pop(index)
+        write_save(todos)
+        del st.session_state[todo]
+        st.experimental_rerun()
 
-for todo in todos:
-    st.checkbox(todo)
+if "temp" not in st.session_state:
+    st.session_state["temp"]=""
 
-st.text_input(label="Enter a To-Do Item below:", placeholder="Walk the dog...", on_change=add_todo, key="new_todo")
+def add_todo():
+    new_todo = st.session_state["text"]
+    todos.append(new_todo + "\n")
+    write_save(todos)
+    st.session_state["temp"] = st.session_state["text"]
+    st.session_state["text"] = ""
+
+input = st.text_input(label="Enter a To-Do Item below:", placeholder="Walk the dog...", on_change=add_todo, key="text")
+
+st.button("Add To-Do", key="add")
+
 
 st.write("Below is your session_state object.")
 st.session_state
+
+# I'll try to fix that glitch some other time lol. Maybe the instructor will show me how to fix it.
+
